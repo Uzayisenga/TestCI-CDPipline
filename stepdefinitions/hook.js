@@ -16,7 +16,6 @@ Before(async function() {
     driver = await new Builder()
         .forBrowser('chrome')
         .setChromeOptions(options)
-        .setChromeService(new chrome.ServiceBuilder('/usr/local/bin/chromedriver'))
         .build();
     this.driver = driver;
 });
