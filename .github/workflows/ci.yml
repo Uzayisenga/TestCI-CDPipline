@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [20.12.2]
         test-files: ['features/upload.feature', 'features/other.feature']
 
     steps:
