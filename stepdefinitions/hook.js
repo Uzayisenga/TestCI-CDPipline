@@ -6,8 +6,8 @@ const { Builder } = require('selenium-webdriver');
 let driver;
 
 Before(async function() {
-    driver = await new Builder().forBrowser('firefox').build();
-    driver = await DriverManager.getDriver('firefox');
+    driver = await new Builder().forBrowser('chrome').build();
+    driver = await DriverManager.getDriver('chrome');
     this.driver = driver;
 });
 

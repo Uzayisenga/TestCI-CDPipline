@@ -28,16 +28,16 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-      
-    - name: Install Firefox
-      run: sudo apt-get install firefox
 
-    - name: Set up Geckodriver
+    - name: Install Chrome
+      run: sudo apt-get install -y google-chrome-stable
+
+    - name: Set up Chromedriver
       run: |
-        GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.tag_name')
-        echo "Downloading geckodriver $GECKODRIVER_VERSION"
-        wget "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
-        tar -xzf "geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz" -C /usr/local/bin
+        CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+        echo "Downloading chromedriver $CHROMEDRIVER_VERSION"
+        wget "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+        unzip chromedriver_linux64.zip -d /usr/local/bin
 
 
     - name: Run tests
