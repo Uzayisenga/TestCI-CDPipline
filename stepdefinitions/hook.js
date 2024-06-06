@@ -12,8 +12,12 @@ Before(async function() {
     options.addArguments('--disable-dev-shm-usage');
     options.addArguments('--disable-gpu'); // if you are running on Windows
     options.addArguments('--window-size=1920,1080');
-    
-    driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+
+    driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(options)
+        .setChromeService(new chrome.ServiceBuilder('/usr/local/bin/chromedriver'))
+        .build();
     this.driver = driver;
 });
 

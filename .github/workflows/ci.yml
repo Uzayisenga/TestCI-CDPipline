@@ -1,3 +1,59 @@
+# name: CI
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     strategy:
+#       matrix:
+#         node-version: [20.12.2]
+#         test-files: ['features/upload.feature', 'features/other.feature']
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
+
+#     - name: Setup Node.js
+#       uses: actions/setup-node@v2
+#       with:
+#         node-version: ${{ matrix.node-version }}
+
+#     - name: Install dependencies
+#       run: npm install
+
+#     - name: Install Chrome
+#       run: sudo apt-get install -y google-chrome-stable
+
+#     - name: Set up Chromedriver
+#       run: |
+#         CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+#         echo "Downloading chromedriver $CHROMEDRIVER_VERSION"
+#         wget "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+#         unzip chromedriver_linux64.zip -d /usr/local/bin
+
+#     - name: Grant execute permissions to cucumber-js
+#       run: chmod +x ./node_modules/.bin/cucumber-js
+
+#     - name: Run tests
+#       run: npx cucumber-js ${{ matrix.test-files }}
+
+#     - name: Generate test report
+#       run: npx cucumber-js --format json:./reports/cucumber_report_${{ matrix.test-files }}.json
+
+#     - name: Upload test report
+#       uses: actions/upload-artifact@v2
+#       with:
+#         name: cucumber-report-${{ matrix.test-files }}
+#         path: ./reports/cucumber_report_${{ matrix.test-files }}.json
+
 name: CI
 
 on:
@@ -38,10 +94,11 @@ jobs:
         echo "Downloading chromedriver $CHROMEDRIVER_VERSION"
         wget "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
         unzip chromedriver_linux64.zip -d /usr/local/bin
+        sudo chmod +x /usr/local/bin/chromedriver
 
     - name: Grant execute permissions to cucumber-js
       run: chmod +x ./node_modules/.bin/cucumber-js
-      
+
     - name: Run tests
       run: npx cucumber-js ${{ matrix.test-files }}
 
