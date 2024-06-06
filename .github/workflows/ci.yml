@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        test-files: ['features/upload.feature', 'features/other.feature']
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npx cucumber-js ${{ matrix.test-files }}
+
+    - name: Generate test report
+      run: npx cucumber-js --format json:./reports/cucumber_report_${{ matrix.test-files }}.json
+
+    - name: Upload test report
+      uses: actions/upload-artifact@v2
+      with:
+        name: cucumber-report-${{ matrix.test-files }}
+        path: ./reports/cucumber_report_${{ matrix.test-files }}.json
