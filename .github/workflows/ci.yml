@@ -39,7 +39,9 @@ jobs:
         wget "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
         unzip chromedriver_linux64.zip -d /usr/local/bin
 
-
+    - name: Grant execute permissions to cucumber-js
+      run: chmod +x ./node_modules/.bin/cucumber-js
+      
     - name: Run tests
       run: npx cucumber-js ${{ matrix.test-files }}
 
