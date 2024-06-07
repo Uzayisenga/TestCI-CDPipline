@@ -102,11 +102,4 @@ jobs:
     - name: Run tests
       run: npx cucumber-js ${{ matrix.test-files }}
 
-    - name: Generate test report
-      run: npx cucumber-js --format json:./reports/cucumber_report_${{ matrix.test-files }}.json
 
-    - name: Upload test report
-      uses: actions/upload-artifact@v2
-      with:
-        name: cucumber-report-${{ matrix.test-files }}
-        path: ./reports/cucumber_report_${{ matrix.test-files }}.json
